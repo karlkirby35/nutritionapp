@@ -8,7 +8,7 @@
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-4">
-        <h1 class="text-2xl font-bold mb-4">Dashboard</h1>
+    <h1 class="text-2xl font-bold mb-4 text-center">Dashboard</h1>
 
         <!-- Meals Section -->
         <div class="space-y-4">
@@ -41,6 +41,13 @@
                     </div>
                 @endif
 
+                  <!-- Confirmation Message for Delete -->
+    @if(session('success') && session('meal') === 'breakfast' && session('action') === 'delete')
+        <div class="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+            {{ session('success') }}
+        </div>
+    @endif
+
                 <!-- Display Breakfast Items -->
                 <div class="mt-4">
                     <h3 class="text-lg font-semibold">Items:</h3>
@@ -51,9 +58,9 @@
                                     <span>{{ $item['name'] }} - {{ $item['calories'] }} kcal</span>
                                     <form action="{{ route('nutrition.delete') }}" method="POST" class="inline">
                                         @csrf
-                                        @method('DELETE')
                                         <input type="hidden" name="meal" value="breakfast">
                                         <input type="hidden" name="index" value="{{ $index }}">
+                                        <input type="hidden" name="action" value="delete">
                                         <button type="submit" class="text-red-600 hover:text-red-800">Delete</button>
                                     </form>
                                 </li>
@@ -105,9 +112,9 @@
                                     <span>{{ $item['name'] }} - {{ $item['calories'] }} kcal</span>
                                     <form action="{{ route('nutrition.delete') }}" method="POST" class="inline">
                                         @csrf
-                                        @method('DELETE')
                                         <input type="hidden" name="meal" value="lunch">
                                         <input type="hidden" name="index" value="{{ $index }}">
+                                        <input type="hidden" name="action" value="delete">
                                         <button type="submit" class="text-red-600 hover:text-red-800">Delete</button>
                                     </form>
                                 </li>
@@ -158,9 +165,9 @@
                                     <span>{{ $item['name'] }} - {{ $item['calories'] }} kcal</span>
                                     <form action="{{ route('nutrition.delete') }}" method="POST" class="inline">
                                         @csrf
-                                        @method('DELETE')
                                         <input type="hidden" name="meal" value="dinner">
                                         <input type="hidden" name="index" value="{{ $index }}">
+                                        <input type="hidden" name="action" value="delete">
                                         <button type="submit" class="text-red-600 hover:text-red-800">Delete</button>
                                     </form>
                                 </li>

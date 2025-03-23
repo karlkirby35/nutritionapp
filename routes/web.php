@@ -16,7 +16,7 @@ Route::post('/nutrition/add', [DashboardController::class, 'addFood'])->name('nu
 // Home route
 Route::get('/', function () { return view('welcome'); });
 
-Route::post('/nutrition/delete', [NutritionController::class, 'delete'])->name('nutrition.delete');
-Route::post('/nutrition/delete', [DashboardController::class, 'deleteFood'])->name('nutrition.delete');
+Route::post('/nutrition/delete', [DashboardController::class, 'delete'])->name('nutrition.delete');
+
 
 

@@ -16,7 +16,7 @@ class DashboardController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-        $action = $request->input('action'); // Capture the action (view or add)
+        $action = $request->input('action'); 
     
         // Fetch nutritional data
         $data = $this->fetchNutritionalData($query);
@@ -53,7 +53,7 @@ class DashboardController extends Controller
 
     public function addFood(Request $request)
     {
-        $meal = $request->input('meal'); // Get the meal type (breakfast, lunch, or dinner)
+        $meal = $request->input('meal'); 
         $foodName = $request->input('food_name');
         $calories = $request->input('calories');
     
@@ -84,9 +84,9 @@ class DashboardController extends Controller
 
 private function fetchNutritionalData($query)
 {
-    // Nutritionix API credentials
-    $appId = '35f6f524'; // Replace with your App ID
-    $appKey = '76623d275b43e643adbd449b01154b62'; // Replace with your App Key
+    
+    $appId = '35f6f524'; 
+    $appKey = '76623d275b43e643adbd449b01154b62'; 
 
     // Create a new Guzzle client
     $client = new Client();
@@ -100,12 +100,12 @@ private function fetchNutritionalData($query)
                 'x-app-key' => $appKey,
             ],
             'json' => [
-                'query' => $query, // The food item to search for
+                'query' => $query, 
             ],
             'verify' => false,
         ]);
 
-        // Decode the JSON response
+        
         $data = json_decode($response->getBody(), true);
 
         // Return the nutritional data
@@ -128,13 +128,19 @@ public function delete(Request $request)
 
     // Remove the item at the specified index
     if (isset($meals[$index])) {
+        $deletedItem = $meals[$index]; 
         array_splice($meals, $index, 1);
     }
 
     // Update the session with the modified meals
     session(["meals.$meal" => $meals]);
 
-    return redirect()->back()->with('success', 'Item deleted successfully.');
+    // Redirect back with a success message
+    return redirect()->back()->with([
+        'success' => "{$deletedItem['name']} removed from $meal.", 
+        'meal' => $meal, 
+        'action' => 'delete', 
+    ]);
 }
 
 
