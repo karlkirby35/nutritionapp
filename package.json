@@ -7,7 +7,7 @@
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
-        "axios": "^1.8.2",
+        "axios": "^1.8.4",
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^1.2.0",
         "tailwindcss": "^4.0.0",
@@ -86,5 +86,13 @@
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/karlkirby35/nutritionapp.git"
+    },
+    "bugs": {
+        "url": "https://github.com/karlkirby35/nutritionapp/issues"
+    },
+    "homepage": "https://github.com/karlkirby35/nutritionapp#readme"
 }
