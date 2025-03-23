@@ -91,4 +91,18 @@ class NutritionController extends Controller
             return back()->withErrors(['error' => 'Failed to fetch data from Nutritionix API']);
         }
     }
+
+    public function delete(Request $request) {
+        $meal = $request->meal;
+        $index = $request->index;
+    
+        $meals = session('meals', []);
+        if (isset($meals[$meal][$index])) {
+            unset($meals[$meal][$index]);
+            session(['meals' => $meals]);
+        }
+    
+        return response()->json(['success' => true]);
+    }
+    
 }

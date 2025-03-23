@@ -9,10 +9,14 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 // Display the form
 Route::get('/nutrition', [NutritionController::class, 'showForm'])->name('nutrition.form');
 
-// Handle form submission
-Route::post('/nutrition', [NutritionController::class, 'getNutritionData'])->name('nutrition.search');
+Route::post('/nutrition/search', [DashboardController::class, 'search'])->name('nutrition.search');
+
+Route::post('/nutrition/add', [DashboardController::class, 'addFood'])->name('nutrition.add');
 
 // Home route
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () { return view('welcome'); });
+
+Route::post('/nutrition/delete', [NutritionController::class, 'delete'])->name('nutrition.delete');
+Route::post('/nutrition/delete', [DashboardController::class, 'deleteFood'])->name('nutrition.delete');
+
+
