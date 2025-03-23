@@ -12,6 +12,12 @@
     <link rel="manifest" href="{{ asset('manifest.json') }}">
         <!-- Meals Section -->
         <div class="space-y-4">
+
+         <!-- Total Calories Consumed -->
+         <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-xl font-semibold mb-4 text-center">Calories Consumed Today</h2>
+            <p class="text-2xl font-bold text-center">{{ $totalCalories }} kcal</p>
+        </div>
             <!-- Breakfast -->
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-xl font-semibold mb-4">Breakfast</h2>
@@ -180,5 +186,7 @@
             </div>
         </div>
     </div>
+    
+   
 </body>
 </html>

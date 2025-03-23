@@ -7,10 +7,45 @@ use GuzzleHttp\Client;
 
 class DashboardController extends Controller
 {
-    // Display the dashboard
     public function index()
     {
-        return view('dashboard');
+        // Retrieve meals from the session
+        $meals = session('meals', []);
+    
+        // Initialize total calories for each meal
+        $breakfastCalories = 0;
+        $lunchCalories = 0;
+        $dinnerCalories = 0;
+    
+        // Calculate total calories for each meal
+        if (isset($meals['breakfast'])) {
+            foreach ($meals['breakfast'] as $item) {
+                $breakfastCalories += $item['calories'] ?? 0;
+            }
+        }
+    
+        if (isset($meals['lunch'])) {
+            foreach ($meals['lunch'] as $item) {
+                $lunchCalories += $item['calories'] ?? 0;
+            }
+        }
+    
+        if (isset($meals['dinner'])) {
+            foreach ($meals['dinner'] as $item) {
+                $dinnerCalories += $item['calories'] ?? 0;
+            }
+        }
+    
+        // Calculates total calories consumed for the day
+        $totalCalories = $breakfastCalories + $lunchCalories + $dinnerCalories;
+    
+        // Pass the calories data to the view
+        return view('dashboard', [
+            'breakfastCalories' => $breakfastCalories,
+            'lunchCalories' => $lunchCalories,
+            'dinnerCalories' => $dinnerCalories,
+            'totalCalories' => $totalCalories, 
+        ]);
     }
 
     public function search(Request $request)
