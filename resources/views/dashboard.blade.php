@@ -9,7 +9,7 @@
 <body class="bg-gray-100">
     <div class="container mx-auto p-4">
     <h1 class="text-2xl font-bold mb-4 text-center">Dashboard</h1>
-
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
         <!-- Meals Section -->
         <div class="space-y-4">
             <!-- Breakfast -->
