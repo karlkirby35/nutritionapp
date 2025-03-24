@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NutritionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MapController;
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -17,6 +18,8 @@ Route::post('/nutrition/add', [DashboardController::class, 'addFood'])->name('nu
 Route::get('/', function () { return view('welcome'); });
 
 Route::post('/nutrition/delete', [DashboardController::class, 'delete'])->name('nutrition.delete');
+
+Route::get('/map', [MapController::class, 'index'])->name('map');
 
 
 

@@ -187,6 +187,16 @@
         </div>
     </div>
     
-   
+    <nav class="fixed bottom-0 left-0 w-full bg-white shadow-lg flex justify-around p-2">
+        <a href="{{ route('dashboard') }}" class="flex flex-col items-center text-gray-700 hover:text-blue-600">
+            <i class="fas fa-home text-xl"></i>
+            <span class="text-xs">Home</span>
+        </a>
+        <a href="{{ route('map') }}" class="flex flex-col items-center text-gray-700 hover:text-blue-600">
+            <i class="fas fa-user text-xl"></i>
+            <span class="text-xs">Map</span>
+        </a>
+       
+    </nav>
 </body>
 </html>
