@@ -123,11 +123,11 @@ private function fetchNutritionalData($query)
     $appId = '35f6f524'; 
     $appKey = '76623d275b43e643adbd449b01154b62'; 
 
-    // Create a new Guzzle client
+   
     $client = new Client();
 
     try {
-        // Make a POST request to the Nutritionix API
+        
         $response = $client->post('https://trackapi.nutritionix.com/v2/natural/nutrients', [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -143,10 +143,10 @@ private function fetchNutritionalData($query)
         
         $data = json_decode($response->getBody(), true);
 
-        // Return the nutritional data
+        // Returns the nutritional data
         return $data;
     } catch (\Exception $e) {
-        // Handle API errors
+        
         return [
             'error' => 'Failed to fetch nutritional data: ' . $e->getMessage(),
         ];
