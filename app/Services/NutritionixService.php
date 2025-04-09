@@ -1,42 +1,44 @@
 <?php
-
 namespace App\Services;
 
-use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 
-class NutritionixService
-{
-    protected $client;
-    protected $appId;
-    protected $appKey;
+class NutritionixService {
+    private $appId;
+    private $appKey;
 
-    public function __construct()
-    {
-        $this->client = new Client();
-        $this->appId = env('NUTRITIONIX_APP_ID');
-        $this->appKey = env('NUTRITIONIX_APP_KEY');
+    public function __construct() {
+        $this->appId = config('services.nutritionix.app_id');
+        $this->appKey = config('services.nutritionix.app_key');
     }
-    public function getNutritionData($query)
-    {
-        try {
-            $response = $this->client->post('https://trackapi.nutritionix.com/v2/natural/nutrients', [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'x-app-id' => $this->appId,
-                    'x-app-key' => $this->appKey,
-                ],
-                'json' => [
-                    'query' => $query,
-                    'timezone' => 'US/Eastern',
-                ],
-                'debug' => true, // Enable debugging
-                'verify' => false, // Disable SSL verification
-            ]);
-    
-            return json_decode($response->getBody(), true);
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            \Log::error('Guzzle Request Error: ' . $e->getMessage());
-            return null;
+
+    public function fetchByBarcode($barcode) {
+        $response = Http::withHeaders([
+            'x-app-id' => $this->appId,
+            'x-app-key' => $this->appKey,
+            'x-remote-user-id' => '0' 
+        ])->get("https://trackapi.nutritionix.com/v2/search/item", [
+            'upc' => $barcode
+        ]);
+
+        if ($response->successful()) {
+            return $this->formatResponse($response->json());
         }
+
+        return null;
+    }
+
+    private function formatResponse($data) {
+        $item = $data['foods'][0] ?? null;
+        if (!$item) return null;
+
+        return [
+            'name' => $item['food_name'],
+            'calories' => $item['nf_calories'],
+            'carbs' => $item['nf_total_carbohydrate'],
+            'protein' => $item['nf_protein'],
+            'fat' => $item['nf_total_fat'],
+            'serving_size' => $item['serving_weight_grams'] . 'g'
+        ];
     }
 }

@@ -13,11 +13,42 @@
         <!-- Meals Section -->
         <div class="space-y-4">
 
+
          <!-- Total Calories Consumed -->
          <div class="bg-white p-6 rounded-lg shadow-md mb-6">
             <h2 class="text-xl font-semibold mb-4 text-center">Calories Consumed Today</h2>
             <p class="text-2xl font-bold text-center">{{ $totalCalories }} kcal</p>
         </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+    <h2 class="text-xl font-semibold mb-4 text-center">Scan Food Barcode</h2>
+    
+    <!-- Scanner UI -->
+    <div class="flex flex-col items-center">
+        <!-- Camera Feed Container -->
+        <div id="scanner-container" class="w-full h-64 bg-black rounded-lg mb-4 overflow-hidden"></div>
+        
+        <!-- Hidden Form for Submission -->
+        <form id="barcode-form" action="{{ route('nutrition.process-barcode') }}" method="POST">
+            @csrf
+            <input type="hidden" name="barcode" id="barcode-input">
+            <input type="hidden" name="meal" value="breakfast"> 
+        </form>
+        
+        <!-- Manual Input Fallback -->
+        <div class="w-full mt-4">
+            <label for="manual-barcode" class="block text-sm font-medium text-gray-700">Or enter barcode manually:</label>
+            <div class="flex gap-2">
+                <input type="text" id="manual-barcode" placeholder="e.g., 012345678912" 
+                       class="mt-1 flex-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                <button onclick="submitManualBarcode()" 
+                        class="mt-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
             <!-- Breakfast -->
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-xl font-semibold mb-4">Breakfast</h2>
@@ -39,6 +70,7 @@
                         </button>
                     </div>
                 </form>
+        <!-- Barcode Scanner Section -->
 
                 <!-- Confirmation Message -->
                 @if(session('success') && session('meal') === 'breakfast')
